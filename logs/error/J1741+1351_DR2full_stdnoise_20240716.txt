@@ -1,0 +1,14 @@
+WARNING: AstropyDeprecationWarning: The private astropy._erfa module has been made into its own package, pyerfa, which is a dependency of astropy and can be imported directly using "import erfa" [astropy._erfa]
+WARNING: AstropyDeprecationWarning: The private astropy._erfa module has been made into its own package, pyerfa, which is a dependency of astropy and can be imported directly using "import erfa" [astropy._erfa]
+WARNING: AstropyDeprecationWarning: The private astropy._erfa module has been made into its own package, pyerfa, which is a dependency of astropy and can be imported directly using "import erfa" [astropy._erfa]
+WARNING: AstropyDeprecationWarning: The private astropy._erfa module has been made into its own package, pyerfa, which is a dependency of astropy and can be imported directly using "import erfa" [astropy._erfa]
+/vast/palmer/home.grace/bbl29/enterprise/enterprise/signals/parameter.py:69: RuntimeWarning: divide by zero encountered in log
+  logpdf = np.log(self.prior(value, **kwargs))
+/vast/palmer/home.grace/bbl29/enterprise/enterprise/signals/parameter.py:69: RuntimeWarning: divide by zero encountered in log
+  logpdf = np.log(self.prior(value, **kwargs))
+/vast/palmer/home.grace/bbl29/enterprise/enterprise/signals/parameter.py:69: RuntimeWarning: divide by zero encountered in log
+  logpdf = np.log(self.prior(value, **kwargs))
+/vast/palmer/home.grace/bbl29/enterprise/enterprise/signals/parameter.py:69: RuntimeWarning: divide by zero encountered in log
+  logpdf = np.log(self.prior(value, **kwargs))
+/home/bbl29/.conda/envs/PTA_env/lib/python3.10/site-packages/PTMCMCSampler/PTMCMCSampler.py:509: RuntimeWarning: All-NaN axis encountered
+  np.nanmax([acor.acor(self._chain[self.burn : (iter - 1), ii])[0] for ii in range(self.ndim)]),

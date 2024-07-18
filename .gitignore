@@ -1,3 +1,5 @@
 *.pyc
 .*.swp
 .ipynb_checkpoints/
+data/
+notebooks/test_ecorr/

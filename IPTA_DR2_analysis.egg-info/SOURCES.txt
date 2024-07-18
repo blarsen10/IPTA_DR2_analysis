@@ -1,0 +1,8 @@
+README.md
+setup.py
+IPTA_DR2_analysis/__init__.py
+IPTA_DR2_analysis/utils.py
+IPTA_DR2_analysis.egg-info/PKG-INFO
+IPTA_DR2_analysis.egg-info/SOURCES.txt
+IPTA_DR2_analysis.egg-info/dependency_links.txt
+IPTA_DR2_analysis.egg-info/top_level.txt
