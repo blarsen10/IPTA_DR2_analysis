@@ -115,7 +115,7 @@ else:
     dm_expdip=False
 
 # set up DM Nfreqs
-pta = model_singlepsr_noise(psr, Tspan=952746385.6296968,
+pta = model_singlepsr_noise(psr, #Tspan=952746385.6296968,
                             # timing
                             tm_svd=True,
                             # white noise

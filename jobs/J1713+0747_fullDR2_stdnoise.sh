@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=DR2_J1713+0747_stdnoise_20240716
+#SBATCH --job-name=DR2_J1713+0747_stdnoise_20240828
 #SBATCH --partition=pi_mingarelli
 #SBATCH --exclude=r806u23n04
-#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/J1713+0747_DR2full_stdnoise_20240716.txt
-#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/J1713+0747_DR2full_stdnoise_20240716.txt
+#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/J1713+0747_DR2full_stdnoise_20240828.txt
+#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/J1713+0747_DR2full_stdnoise_20240828.txt
 #SBATCH --nodes=1
 #SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1

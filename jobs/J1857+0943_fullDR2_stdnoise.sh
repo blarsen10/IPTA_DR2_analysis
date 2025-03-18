@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=DR2_J1857+0943_stdnoise_20240716
+#SBATCH --job-name=DR2_J1857+0943_stdnoise_20240828
 #SBATCH --partition=pi_mingarelli
 #SBATCH --exclude=r806u23n04
-#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/J1857+0943_DR2full_stdnoise_20240716.txt
-#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/J1857+0943_DR2full_stdnoise_20240716.txt
+#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/J1857+0943_DR2full_stdnoise_20240828.txt
+#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/J1857+0943_DR2full_stdnoise_20240828.txt
 #SBATCH --nodes=1
 #SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1
@@ -23,7 +23,7 @@ module load OpenMPI
 conda activate PTA_env
 
 psrname=J1857+0943
-Niter=350000
+Niter=600000
 outdir=/vast/palmer/scratch/mingarelli/bbl29/IPTA_DR2_analysis/chains/dr2full/stdnoise/J1857+0943
 psr=/vast/palmer/home.grace/bbl29/IPTA_DR2_analysis/data/full_ePSRs/J1857+0943.hdf5
 emp_dist_path=

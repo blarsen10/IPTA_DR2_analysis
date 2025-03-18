@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=CRN13_g4p3_stdnoise_20240718
+#SBATCH --job-name=CRN13_g4p3_stdnoise_20240830
 #SBATCH --partition=pi_mingarelli
 #SBATCH --exclude=r806u23n04
-#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/CRN13_g4p3_stdnoise_20240718.txt
-#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/CRN13_g4p3_stdnoise_20240718.txt
+#SBATCH --output=/home/bbl29/IPTA_DR2_analysis/logs/CRN13_g4p3_stdnoise_20240830.txt
+#SBATCH --error=/home/bbl29/IPTA_DR2_analysis/logs/error/CRN13_g4p3_stdnoise_20240830.txt
 #SBATCH --nodes=1
 #SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1

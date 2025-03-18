@@ -17,7 +17,7 @@ from enterprise_extensions.blocks import common_red_noise_block
 from enterprise_extensions.sampler import setup_sampler, group_from_params
 import enterprise.constants as const
 from targeted_cws_ng15.Dists_Parameters import get_parameter_groups_CAW_target
-from enterprise.signals import signal_base
+from enterprise.signals import signal_base, deterministic_signals
 
 parser = argparse.ArgumentParser()
 
@@ -40,6 +40,10 @@ parser.add_argument("--Niter", default=2_000_000, type=int,
 parser.add_argument('--fixed_gamma', action='store_true',
                     dest='fixed_gamma', default=False,
                     help='Run with fixed gamma=13/3 (bool type)')
+
+parser.add_argument('--bayesephem', action='store_true',
+                    dest='bayesephem', default=False,
+                    help='Run with BayesEphem')
 
 parser.add_argument('--human', type=str, default='Mr. Meeseeks',
                     help='Name of human who ran this (saved to runtime info)')
@@ -101,16 +105,23 @@ for psr_path in psr_paths:
 print(f'Loaded {len(psrs)} pulsars')
 
 # set up model
-# TODO: Fix hardcoded timespan
-Tspan = 952746385.6296968
+max_mjd = np.max([np.max(psr.toas) for psr in psrs])
+min_mjd = np.min([np.min(psr.toas) for psr in psrs])
+Tspan = max_mjd - min_mjd
+if args.fixed_gamma:
+    gamma_val = 13/3
+else:
+    gamma_val = None
 crn = common_red_noise_block(psd='powerlaw', prior='log-uniform', Tspan=Tspan,
-                             components=13, gamma_val=13/3,
+                             components=13, gamma_val=gamma_val,
                              logmin=-18, logmax=-12,
                              orf=None, name='crn')
+be = deterministic_signals.PhysicalEphemerisSignal(use_epoch_toas=True, model='orbel')
 
 # loop through pulsars, add noise
 models = []
 for psr in psrs:
+    psr_Tspan = np.max(psr.toas) - np.min(psr.toas)
     if 'NANOGrav' in psr.flags['pta']:
         inc_ecorr = True
         ecorr_groups_by_PTA = {'NANOGrav':'group'}
@@ -120,12 +131,11 @@ for psr in psrs:
     efeq_groups_by_PTA = {}
     for pta in np.unique(psr.flags['pta']):
         efeq_groups_by_PTA[pta] = 'group'
-    #print(efeq_groups_by_PTA)
-    #print(ecorr_groups_by_PTA)
     if psr.name == 'J1713+0747':
         dm_expdip=True
     else:
         dm_expdip=False
+    print(f'{psr.name} DM Tspan: {psr_Tspan}')
     noise = model_singlepsr_noise(psr, Tspan=Tspan, psr_model=True,
                                   # timing
                                   tm_svd=True, tm_marg=True,
@@ -136,7 +146,7 @@ for psr in psrs:
                                   # DM
                                   dm_var=True, dm_type='gp',
                                   dmgp_kernel='diag', dm_psd='powerlaw',
-                                  dm_Nfreqs=30,
+                                  dm_Nfreqs=30, dm_Tspan=psr_Tspan,
                                   # solar wind
                                   dm_sw_deter=False,
                                   # dm dip
@@ -144,14 +154,17 @@ for psr in psrs:
                                   dm_expdip_tau_min=np.log10(5), dm_expdip_tau_max=np.log10(500), 
                                   # red noise
                                   log_A_min=-20, log_A_max=-11)
-    signals = crn + noise
+    if args.bayesephem:
+        signals = crn + noise + be
+    else:
+        signals = crn + noise
     models.append(signals(psr))
 pta = signal_base.PTA(models)
 pta.set_default_params(noise_params)
 
 # set groups for adaptive metropolis
 gr = get_parameter_groups_CAW_target(pta)
-with open(f'{outdir}/groups.txt', 'w') as fi:
+with open(f'{args.outdir}/groups.txt', 'w') as fi:
     for group in gr:
         line = np.array(pta.param_names)[np.array(group)]
         fi.write("[" + " ".join(line) + "]\n")
